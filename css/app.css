@@ -1,0 +1,22 @@
+/* line 3, ../sass/app.sass */
+body {
+  font-family: "Helvetica";
+  text-align: center;
+  padding: 50px 20px 0;
+  background: #f4f4f7;
+  color: #444;
+  margin: 0;
+}
+
+/* line 10, ../sass/app.sass */
+h1 {
+  font-size: 65px;
+  line-height: 1.2em;
+  border-bottom: #CCC solid 1px;
+  padding: 20px 0;
+}
+
+/* line 16, ../sass/app.sass */
+h3 {
+  font-weight: 300;
+}

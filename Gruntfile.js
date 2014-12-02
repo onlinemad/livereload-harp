@@ -2,6 +2,7 @@
 
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-nodemon');
+  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
   // Project configuration.
@@ -23,20 +24,30 @@ module.exports = function(grunt) {
         }
       }
     },
+    compass: {
+      dist: {
+        options: {
+          sassDir: 'sass',
+          cssDir: 'css'
+        }
+      },
+    },
     watch: {
       options: {
         livereload: true,
       },
       file: {
-        files: ['**/*.jade', '**/*.html', '**/*.css', '**/*.js', '!node_modules/**/*']
+        files: ['**/*.jade', '**/*.html', '**/*.css', '**/*.js', '**/*.sass', '!node_modules/**/*'],
+        tasks: 'compass'
       }
     },
     concurrent: {
       options: {
         logConcurrentOutput: true
       },
-      dev: ['nodemon:src', 'watch']
+      dev: ['compass', 'nodemon:src', 'watch']
     }
   });
+  grunt.option('force', true);
   grunt.registerTask('default', ['concurrent:dev']);
 };
