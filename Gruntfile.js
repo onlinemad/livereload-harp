@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-harp');
   // Project configuration.
   grunt.initConfig({
     nodemon: {
@@ -27,8 +29,8 @@ module.exports = function(grunt) {
     compass: {
       dist: {
         options: {
-          sassDir: 'sass',
-          cssDir: 'css'
+          sassDir: 'public/sass',
+          cssDir: 'public/css'
         }
       },
     },
@@ -41,6 +43,20 @@ module.exports = function(grunt) {
         tasks: 'compass'
       }
     },
+    copy: {
+      main: {
+        src: ['**/*',  '!sass/**'],
+        expand: true,
+        cwd: 'public',
+        dest: '.tmp',
+      },
+    },
+    harp: {
+      dist: {
+        source: '.tmp',
+        dest: 'www'
+      }
+    },
     concurrent: {
       options: {
         logConcurrentOutput: true
@@ -50,4 +66,13 @@ module.exports = function(grunt) {
   });
   grunt.option('force', true);
   grunt.registerTask('default', ['concurrent:dev']);
+  grunt.registerTask('compile', ['compass', 'copy', 'harp']);
+  // grunt.registerTask('compile', function() {
+  //   grunt.task.run('compass');
+  //   grunt.task.run('copy');
+  //   grunt.util.spawn({
+  //     cmd: 'harp',
+  //     args: ['compile', '.tmp', 'www']
+  //   });
+  // });
 };
